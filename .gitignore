@@ -1,0 +1,5 @@
+*.agdai
+MAlonzo/**
+*.bak
+Everything.agda
+.DS_Store
