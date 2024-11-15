@@ -37,31 +37,35 @@ module _ where
   private module DisplayCollatz where
     open import Data.Nat
     open import Data.Nat.Properties
-    open import Agda.Builtin.Nat using (_*_)
+    open import Agda.Builtin.Nat using (_*_; _-_)
+    infix 4 _≟_
+    _≟_ = discreteℕ
 
 \end{code}
 %<*collatz>
 \begin{code}[number=eqn:collatz]
     collatz : GraphOf ℕ
-    collatz 0        = ⟅⟆
-    collatz (suc n)  = 
-      if 3 ∣ n  
-        then  ⟅ 1 ▹ 2 * suc n , 1 ▹ n div 3 ⟆
-        else  ⟅ 1 ▹ 2 * suc n ⟆
+    collatz 0  = ⟅⟆
+    collatz n  = 
+      if does (n mod 6 ≟ 4)
+        then  ⟅ 1 ▹ 2 * n , 1 ▹ (n - 1) div 3 ⟆
+        else  ⟅ 1 ▹ 2 * n ⟆
 \end{code}
 %</collatz>
 \begin{code}
   module _ where
     open import Data.Nat
     open import Data.Nat.Properties
-    open import Agda.Builtin.Nat using (_*_)
+    open import Agda.Builtin.Nat using (_*_; _-_)
+    infix 4 _≟_
+    _≟_ = discreteℕ
 
     collatz : GraphOf ℕ
     collatz 0 = ⟅⟆
-    collatz (suc n) =
-      if 3 ∣ n
-        then  ⟅ 0 ▹ 2 * suc n , 0 ▹ n div 3 ⟆
-        else  ⟅ 0 ▹ 2 * suc n ⟆
+    collatz n =
+      if does (n mod 6 ≟ 4)
+        then  ⟅ 0 ▹ 2 * n , 0 ▹ (n - 1) div 3 ⟆
+        else  ⟅ 0 ▹ 2 * n ⟆
 
   module NonIdealGraph where
 \end{code}
@@ -162,7 +166,7 @@ module _ where
        ⟅ 0  ▹ [ 1 ] , 1  ▹ [ 1 , 2 ] , 2  ▹ [ 1 , 2 , 4 ]
        , 3  ▹ [ 1 , 2 , 4 , 8 ] , 4  ▹ [ 1 , 2 , 4 , 8 , 16 ]
        , 5  ▹ [ 1 , 2 , 4 , 8 , 16 , 32 ]
-       , 5  ▹ [ 1 , 2 , 4 , 8 , 16 , 5 ] , 1  ▹ [ 1 , 0 ] ⟆ 
+       , 5  ▹ [ 1 , 2 , 4 , 8 , 16 , 5 ] ⟆
 \end{code}
 %</collatz-paths>
 \begin{code}
